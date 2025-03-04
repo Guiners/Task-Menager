@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% load i18n %}{% trans "Tasks" %}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles.css' %}">
+</head>
+<body>
+    <h1>{% trans "Tasks" %}:</h1>
+
+    <form method="POST" action="/">
+        {% csrf_token %}
+        {{ TaskForm.as_p }}
+        <input class="btn" type="submit" value="{% trans 'Create Task' %}">
+    </form>
+
+    {% for task in tasks %}
+        <div class="task">
+            <h2>{{ task.title }}</h2>
+            <p>{% trans "Description" %}: {{ task.description }}</p>
+            <p>{% trans "Created at" %}: {{ task.created }}</p>
+            <p>{% trans "Status" %}: {% if task.completed %}{% trans "Completed" %}{% else %}{% trans "Not Completed" %}{% endif %}</p>
+            <a href="{% url 'update-task' task.id %}">{% trans "Update" %}</a>
+            <a href="{% url 'delete-task' task.id %}">{% trans "Delete" %}</a>
+        </div>
+        <hr>
+    {% endfor %}
+</body>
+</html>
