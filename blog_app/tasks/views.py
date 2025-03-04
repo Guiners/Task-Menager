@@ -1,12 +1,11 @@
 import logging
 
-from django.shortcuts import render, redirect, get_object_or_404
-
 from django.http import HttpResponse
-
-from .models import Task
+from django.shortcuts import get_object_or_404, redirect, render
 
 from .forms import TaskForm
+from .models import Task
+
 logger = logging.getLogger(__name__)
 
 
@@ -18,10 +17,10 @@ def index(request):
         if form.is_valid():
             logger.info("Created task: %s", form)
             form.save()
-        return redirect('/')
+        return redirect("/")
 
     context = {"tasks": tasks, "TaskForm": form}
-    return render(request, 'tasks.html', context)
+    return render(request, "tasks.html", context)
 
 
 def update_task(request, pk):
@@ -34,10 +33,10 @@ def update_task(request, pk):
 
         if form.is_valid():
             form.save()
-            return redirect('/')
+            return redirect("/")
 
     context = {"form": form}
-    return render(request, 'update_task.html', context)
+    return render(request, "update_task.html", context)
 
 
 def delete_task(request, pk):
@@ -48,5 +47,4 @@ def delete_task(request, pk):
         return redirect("/")
 
     context = {"task": task}
-    return render(request, 'delete_task.html', context)
-
+    return render(request, "delete_task.html", context)

@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
-
 from django.utils.translation import gettext as _
+
 
 class Task(models.Model):
     title = models.CharField(max_length=200, verbose_name=_("Title"))
